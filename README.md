@@ -1,2 +1,3 @@
 # assistente-git
-Assistente Git
+Assistente Para Auxiliar na Utilização do Git
+
