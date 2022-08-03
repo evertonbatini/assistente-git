@@ -1,0 +1,8 @@
+03/08/2022 13:51:16,18 comando: "git checkout   1552-erro-ao-cadastrar-unidade-negocio" 
+Branch '1552-erro-ao-cadastrar-unidade-negocio' set up to track remote branch '1552-erro-ao-cadastrar-unidade-negocio' from 'origin'.
+Switched to a new branch '1552-erro-ao-cadastrar-unidade-negocio'
+03/08/2022 13:51:16,39 comando: "git pull origin   1552-erro-ao-cadastrar-unidade-negocio" 
+From https://dev.azure.com/sstecnologialtda/Horus3/_git/Horus3
+ * branch              1552-erro-ao-cadastrar-unidade-negocio -> FETCH_HEAD
+Already up to date.
+03/08/2022 13:51:19,17 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 

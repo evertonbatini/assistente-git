@@ -1,19 +1,23 @@
-* PBI/1499-nfse-ibipora
-  1550-listagem-chamado
-  remotes/origin/1550-listagem-chamado
+* 1552-erro-ao-cadastrar-unidade-negocio
+  remotes/origin/1552-erro-ao-cadastrar-unidade-negocio
+  remotes/origin/1313-pegar-email-do-cliente-pertinente-ao-modulo-que-ele-esta
+  PBI/1499-nfse-ibipora
+  remotes/origin/PBI/1499-nfse-ibipora
+  1575-usuario-cad
+  remotes/origin/1575-usuario-cad
+  remotes/origin/1513-relatório-comparativos-contas-receber-pagar
+  1533-cadastro-situacao-combo
   develop
   remotes/origin/develop
-  remotes/origin/PBI/1499-nfse-ibipora
+  1550-listagem-chamado
+  remotes/origin/1550-listagem-chamado
   1530-cadastro-Produto-cfop-modal
   remotes/origin/1530-cadastro-Produto-cfop-modal
-  1513-relatório-comparativos-contas-receber-pagar
-  remotes/origin/1513-relatório-comparativos-contas-receber-pagar
-  1547-cfop-und-negocio
   remotes/origin/1547-cfop-und-negocio
+  producao
   remotes/origin/producao
   qas
   remotes/origin/qas
-  1546-erro-contas
   remotes/origin/1546-erro-contas
   Bugs/1546-contas-pagar
   Bugs/1545-modal-usuario
@@ -36,7 +40,6 @@
   remotes/origin/PBI/1517-preparar-log
   PBI/1515-erro-und-negocio
   remotes/origin/PBI/1515-erro-und-negocio
-  bispoBranch
   remotes/origin/bispoBranch
   PBI/1507-retorno2
   remotes/origin/PBI/1507-retorno2
@@ -63,6 +66,7 @@
   remotes/origin/PBI/1490-selecionar-arquivo
   remotes/origin/PBI/1489-mdfe-validacoes
   remotes/origin/PBI/1487-selecionar-municipio
+  PBI/1485-modal-pessoa
   remotes/origin/PBI/1485-modal-pessoa
   remotes/origin/PBI/1484-modal-classificacao
   remotes/origin/PBI/1483-coluna-valor
@@ -152,7 +156,6 @@
   remotes/origin/PBI/update-primeng
   remotes/origin/Backlog-item-1282-Clicheria
   remotes/origin/PBI/1018-mdfe
-  PBI/1018-mdfe
   remotes/origin/NetCore6
   remotes/origin/1179-ClicheriaCadastrosNivel2
   remotes/origin/primeNgBranch

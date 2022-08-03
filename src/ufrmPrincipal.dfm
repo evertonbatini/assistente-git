@@ -65,10 +65,11 @@ object frmPrincipal: TfrmPrincipal
   end
   object ListaBranchs: TListBox
     Left = 8
-    Top = 64
+    Top = 72
     Width = 1273
-    Height = 561
+    Height = 553
     Anchors = [akLeft, akTop, akRight, akBottom]
+    BorderStyle = bsNone
     Color = clBlack
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -127,6 +128,31 @@ object frmPrincipal: TfrmPrincipal
     Height = 25
     TabOrder = 7
     OnChange = edPesquisarChange
+  end
+  object CheckVerComandos: TCheckBox
+    Left = 1184
+    Top = 8
+    Width = 97
+    Height = 17
+    Caption = 'Ver Comandos'
+    TabOrder = 8
+  end
+  object Memo1: TMemo
+    Left = 704
+    Top = 72
+    Width = 577
+    Height = 553
+    BorderStyle = bsNone
+    Color = clBlack
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    ScrollBars = ssBoth
+    TabOrder = 9
+    WordWrap = False
   end
   object Timer1: TTimer
     Interval = 30

@@ -21,6 +21,8 @@ type
     Label2: TLabel;
     edPesquisar: TEdit;
     Label3: TLabel;
+    CheckVerComandos: TCheckBox;
+    Memo1: TMemo;
     procedure btnListarClick(Sender: TObject);
     procedure btnMudarParaClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -37,10 +39,11 @@ type
     function DataArquivo(arquivo: string): TDateTime;
     function RunProcess(FileName: string; ShowCmd: DWORD; wait: Boolean;
       ProcID: PDWORD): Longword;
-    procedure Comando(comando: String; aguardar: boolean = true);
+    procedure Comando(comando:String; aguardar: boolean = true; salvarResult: boolean = true);
     function Branch: String;
     procedure Log(sLog: string);
     procedure AddBranch(sBranch: string);
+    procedure LimparResult;
     { Private declarations }
   public
     { Public declarations }
@@ -62,7 +65,7 @@ var
 begin
   sPath := ExtractFilePath(Application.ExeName);
 
-  Comando('git branch -a --sort=-committerdate>'+sPath+'branch');
+  Comando('git branch -a --sort=-committerdate>'+sPath+'branch', true, false);
 
   dtArquivo := DataArquivo(sPath+'branch');
   Log('Atualizado: ' + DateTimeToStr(dtArquivo));
@@ -103,15 +106,40 @@ begin
   FindClose(F);
 end;
 
-procedure TfrmPrincipal.Comando(comando:String; aguardar: boolean = true);
+procedure TfrmPrincipal.Comando(comando:String; aguardar: boolean = true; salvarResult: boolean = true);
 var
   ProcID: Cardinal;
+  sPath:String;
+  sResult:TStringList;
+  show:Integer;
 begin
   ProcID := 0;
   if (aguardar) then
     Log('Aguarde...');
+
   Application.ProcessMessages;
-  RunProcess(PChar('cmd.exe /c cd '+Edit1.Text+' & ' + comando + ''), SW_HIDE, aguardar, @ProcID);
+
+  sPath := ExtractFilePath(Application.ExeName);
+
+  if (CheckVerComandos.Checked) then
+  begin
+    comando := 'pause & '+comando+' & pause';
+    show := SW_SHOWNORMAL;
+  end
+  else
+    show := SW_HIDE;
+
+  comando := ' echo %date% %time% comando: "' + comando + '">>' + sPath + 'result & ' + comando;
+
+  comando := 'cmd.exe /c cd '+Edit1.Text+' & ' + comando;
+
+  if (salvarResult) then
+    comando := comando + '>>' + sPath + 'result 2>&1';
+
+  RunProcess(PChar(comando), show, aguardar, @ProcID);
+
+  if FileExists(sPath+'result') then
+    Memo1.Lines.LoadFromFile(sPath+'result');
 end;
 
 function TfrmPrincipal.RunProcess(FileName: string; ShowCmd: DWORD; wait: Boolean; ProcID:
@@ -157,7 +185,9 @@ end;
 
 procedure TfrmPrincipal.btnMudarParaClick(Sender: TObject);
 begin
-  Comando('git checkout ' + Branch + ' & git pull origin '+Branch);
+  LimparResult;
+  Comando('git checkout ' + Branch);
+  Comando('git pull origin ' + Branch);
   btnListar.Click;
 end;
 
@@ -165,6 +195,7 @@ function TfrmPrincipal.Branch():String;
 begin
   Result := ListaBranchs.Items[ListaBranchs.ItemIndex];
   Result := StringReplace(Result, 'remotes/origin/', '', []);
+  Result := StringReplace(Result, '* ', '', []);
 end;
 
 procedure TfrmPrincipal.Timer1Timer(Sender: TObject);
@@ -187,11 +218,13 @@ end;
 
 procedure TfrmPrincipal.btnMesclarClick(Sender: TObject);
 begin
-  Comando('git checkout ' + Branch + ' & git pull origin '+Branch);
+  Comando('git checkout ' + Branch);
+  Comando('git pull origin '+Branch);
   Comando('git checkout ' + edBranchBase.Text);
   Comando('git pull');
   Comando('git checkout ' + Branch);
   Comando('git merge ' + edBranchBase.Text);
+  btnListar.Click;
 end;
 
 procedure TfrmPrincipal.Log(sLog:string);
@@ -212,6 +245,7 @@ procedure TfrmPrincipal.edNovaBranchKeyDown(Sender: TObject; var Key: Word;
 begin
   if (Key = VK_RETURN) and (edNovaBranch.Text <> '') then
   begin
+    LimparResult;
     Comando('git checkout ' + edBranchBase.Text);
     Comando('git pull');
     Comando('git checkout -b ' + edNovaBranch.Text);
@@ -226,6 +260,7 @@ begin
   begin
     if (MessageDlg('Deletar '+Branch+'?', mtConfirmation, [mbYes, mbNo], 0)) = mrYes then
     begin
+      LimparResult;
       Comando('git checkout ' + edBranchBase.Text);
       Comando('git branch -d ' + Branch);
       btnListar.Click;
@@ -245,6 +280,14 @@ begin
       Exit;
     end;
   end;
+end;
+
+procedure TfrmPrincipal.LimparResult;
+var
+  sPath:string;
+begin
+  sPath := ExtractFilePath(Application.ExeName);
+  DeleteFile(sPath+'result');
 end;
 
 end.
