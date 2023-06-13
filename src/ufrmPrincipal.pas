@@ -201,8 +201,8 @@ end;
 procedure TfrmPrincipal.Timer1Timer(Sender: TObject);
 begin
   Timer1.Enabled := False;
+  Comando('git fetch', true, false);
   btnListar.Click;
-  Comando('git fetch', false);
 end;
 
 procedure TfrmPrincipal.ListaBranchsDblClick(Sender: TObject);

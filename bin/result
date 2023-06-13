@@ -1,8 +1,51 @@
-03/08/2022 13:51:16,18 comando: "git checkout   1552-erro-ao-cadastrar-unidade-negocio" 
-Branch '1552-erro-ao-cadastrar-unidade-negocio' set up to track remote branch '1552-erro-ao-cadastrar-unidade-negocio' from 'origin'.
-Switched to a new branch '1552-erro-ao-cadastrar-unidade-negocio'
-03/08/2022 13:51:16,39 comando: "git pull origin   1552-erro-ao-cadastrar-unidade-negocio" 
+13/06/2023 10:42:31,26 comando: "git checkout   1759-logs" 
+Your branch is behind 'origin/1759-logs' by 19 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+Switched to branch '1759-logs'
+13/06/2023 10:42:31,80 comando: "git pull origin   1759-logs" 
 From https://dev.azure.com/sstecnologialtda/Horus3/_git/Horus3
- * branch              1552-erro-ao-cadastrar-unidade-negocio -> FETCH_HEAD
-Already up to date.
-03/08/2022 13:51:19,17 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 
+ * branch                1759-logs  -> FETCH_HEAD
+Updating 521b11529..d1b5c04bd
+Fast-forward
+ Domain/DTOs/Cadastros/AgendaDto.cs                 |   1 +
+ Domain/DTOs/Cadastros/AgendaTelefoneDto.cs         |   1 +
+ Domain/DTOs/Log/ColumnData.cs                      |   1 +
+ Domain/Entities/Cadastros/Agenda.cs                |   4 +
+ Domain/Entities/Cadastros/AgendaTelefone.cs        |   1 +
+ Domain/Entities/Cadastros/Banco.cs                 |   1 +
+ Domain/Entities/Cadastros/Cargo.cs                 |   1 +
+ Domain/Entities/Cadastros/Cedente.cs               |   2 +
+ Domain/Entities/Cadastros/Cest.cs                  |   1 +
+ Domain/Entities/Cadastros/Cfop.cs                  |   2 +
+ Domain/Entities/Cadastros/Classificacao.cs         |   1 +
+ Domain/Entities/Cadastros/CondicaoParcelamento.cs  |   3 +-
+ Domain/Entities/Cadastros/Condutor.cs              |   1 +
+ Domain/Entities/Cadastros/ContaFinanceira.cs       |   1 +
+ Domain/Entities/Cadastros/Departamento.cs          |   2 +-
+ Domain/Entities/Cadastros/Deposito.cs              |   1 +
+ Domain/Entities/Cadastros/Empresas/Empresa.cs      |   3 +-
+ .../Cadastros/Empresas/EmpresaCadConfig.cs         |   1 +
+ .../Cadastros/Empresas/IEmpresaCadConfigService.cs |   2 -
+ .../Services/Cadastros/Empresas/IEmpresaService.cs |   2 -
+ Domain/Services/Cadastros/CestService.cs           |   8 +-
+ Domain/Services/Cadastros/ClassificacaoService.cs  |   5 +
+ .../Cadastros/Empresas/EmpresaCadConfigService.cs  |  23 +-
+ .../Services/Cadastros/Empresas/EmpresaService.cs  |  22 --
+ .../Repository/Log/RepositoryGerenciadorLog.cs     |  44 ++-
+ .../Controllers/Cadastros/AgendaController.cs      |  41 +-
+ .../Controllers/Cadastros/BancoController.cs       |  11 +-
+ .../Controllers/Cadastros/CargoController.cs       |   7 +-
+ .../Controllers/Cadastros/CedenteController.cs     |  10 +-
+ ssSolution/Controllers/Cadastros/CestController.cs |   1 +
+ ssSolution/Controllers/Cadastros/CfopController.cs |   7 +-
+ .../Cadastros/ClassificacaoController.cs           |   6 +-
+ .../Cadastros/CondicaoParcelamentoController.cs    |   8 +-
+ .../Controllers/Cadastros/CondutorController.cs    |   8 +-
+ .../Cadastros/ContaFinanceiraController.cs         |   6 +-
+ .../Cadastros/DepartamentoController.cs            |   7 +-
+ .../Controllers/Cadastros/DepositoController.cs    |   8 +-
+ .../Empresas/EmpresaCadConfigController.cs         |   6 -
+ .../Cadastros/Empresas/EmpresaController.cs        |  13 +-
+ ssSolution/Script/@script.txt                      | 415 ++++++++++++++++++++-
+ 40 files changed, 540 insertions(+), 148 deletions(-)
+13/06/2023 10:42:36,82 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 
