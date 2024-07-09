@@ -1,6 +1,6 @@
 object frmPrincipal: TfrmPrincipal
-  Left = 256
-  Top = 188
+  Left = 328
+  Top = 194
   Width = 1305
   Height = 675
   Caption = 'Assistente Git'
@@ -11,6 +11,7 @@ object frmPrincipal: TfrmPrincipal
   Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   DesignSize = (
     1289
     636)
@@ -159,5 +160,12 @@ object frmPrincipal: TfrmPrincipal
     OnTimer = Timer1Timer
     Left = 600
     Top = 64
+  end
+  object TimerAtualizar: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = TimerAtualizarTimer
+    Left = 232
+    Top = 192
   end
 end

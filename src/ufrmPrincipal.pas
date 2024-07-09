@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ShellApi, ExtCtrls;
+  Dialogs, StdCtrls, ShellApi, ExtCtrls, uThreadComandos;
 
 type
   TfrmPrincipal = class(TForm)
@@ -23,6 +23,7 @@ type
     Label3: TLabel;
     CheckVerComandos: TCheckBox;
     Memo1: TMemo;
+    TimerAtualizar: TTimer;
     procedure btnListarClick(Sender: TObject);
     procedure btnMudarParaClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -35,7 +36,10 @@ type
     procedure ListaBranchsKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure edPesquisarChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure TimerAtualizarTimer(Sender: TObject);
   private
+    ComandosThread:TComandos;
     function DataArquivo(arquivo: string): TDateTime;
     function RunProcess(FileName: string; ShowCmd: DWORD; wait: Boolean;
       ProcID: PDWORD): Longword;
@@ -44,6 +48,7 @@ type
     procedure Log(sLog: string);
     procedure AddBranch(sBranch: string);
     procedure LimparResult;
+    procedure AtualizarListas;
     { Private declarations }
   public
     { Public declarations }
@@ -58,28 +63,13 @@ implementation
 
 procedure TfrmPrincipal.btnListarClick(Sender: TObject);
 var
-  sArquivo:TStringList;
   sPath:String;
-  dtArquivo: TDateTime;
-  i:Integer;
 begin
   sPath := ExtractFilePath(Application.ExeName);
 
   Comando('git branch -a --sort=-committerdate>'+sPath+'branch', true, false);
 
-  dtArquivo := DataArquivo(sPath+'branch');
-  Log('Atualizado: ' + DateTimeToStr(dtArquivo));
-
-  sArquivo := TStringList.Create;
-  sArquivo.LoadFromFile(sPath+'branch');
-  sArquivo.Text := UTF8Decode(sArquivo.Text);
-
-  ListaBranchs.Items.Text := sArquivo.Text;
-  ListaBranchs.Items.Clear;
-  for i := 0 to sArquivo.Count-1 do
-  begin
-    AddBranch(sArquivo[i]);
-  end;
+  TimerAtualizar.Enabled := True;
 end;
 
 procedure TfrmPrincipal.AddBranch(sBranch:string);
@@ -106,7 +96,7 @@ begin
   FindClose(F);
 end;
 
-procedure TfrmPrincipal.Comando(comando:String; aguardar: boolean = true; salvarResult: boolean = true);
+{procedure TfrmPrincipal.Comando(comando:String; aguardar: boolean = true; salvarResult: boolean = true);
 var
   ProcID: Cardinal;
   sPath:String;
@@ -140,6 +130,18 @@ begin
 
   if FileExists(sPath+'result') then
     Memo1.Lines.LoadFromFile(sPath+'result');
+end;}
+
+procedure TfrmPrincipal.Comando(comando:String; aguardar: boolean = true; salvarResult: boolean = true);
+var
+  commandExec:TCommandoExec;
+begin
+  commandExec := TCommandoExec.Create;
+  commandExec.comando := comando;
+  commandExec.sPath := ExtractFilePath(Application.ExeName);
+  commandExec.repo := Edit1.Text;
+  commandExec.salvarResult := salvarResult;
+  ComandosThread.addComando(commandExec);
 end;
 
 function TfrmPrincipal.RunProcess(FileName: string; ShowCmd: DWORD; wait: Boolean; ProcID:
@@ -200,9 +202,19 @@ end;
 
 procedure TfrmPrincipal.Timer1Timer(Sender: TObject);
 begin
+  //sem thread
+  {
   Timer1.Enabled := False;
   Comando('git fetch', true, false);
   btnListar.Click;
+  }
+
+  if (ComandosThread <> nil) then
+  begin
+    Timer1.Enabled := False;
+    Comando('git fetch', true, false);
+    btnListar.Click;
+  end;
 end;
 
 procedure TfrmPrincipal.ListaBranchsDblClick(Sender: TObject);
@@ -288,6 +300,50 @@ var
 begin
   sPath := ExtractFilePath(Application.ExeName);
   DeleteFile(sPath+'result');
+end;
+
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  ComandosThread := TComandos.Create(False);
+  AtualizarListas;
+end;
+
+procedure TfrmPrincipal.TimerAtualizarTimer(Sender: TObject);
+begin
+  Log('Aguarde...');
+  
+  if (ComandosThread <> nil) and (not ComandosThread.executando) then
+  begin
+    TimerAtualizar.Enabled := False;
+    AtualizarListas;
+  end;
+end;
+
+procedure TfrmPrincipal.AtualizarListas;
+var
+  sArquivo:TStringList;  
+  dtArquivo: TDateTime;
+  sPath : String;
+  i:Integer;
+begin
+  sPath := ExtractFilePath(Application.ExeName);
+
+  dtArquivo := DataArquivo(sPath+'branch');
+  Log('Atualizado: ' + DateTimeToStr(dtArquivo));
+
+  sArquivo := TStringList.Create;
+  sArquivo.LoadFromFile(sPath+'branch');
+  sArquivo.Text := UTF8Decode(sArquivo.Text);
+
+  ListaBranchs.Items.Text := sArquivo.Text;
+  ListaBranchs.Items.Clear;
+  for i := 0 to sArquivo.Count-1 do
+  begin
+    AddBranch(sArquivo[i]);
+  end;
+
+  if FileExists(sPath+'result') then
+    Memo1.Lines.LoadFromFile(sPath+'result');
 end;
 
 end.

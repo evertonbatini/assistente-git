@@ -2,7 +2,8 @@ program AssistenteGit;
 
 uses
   Forms,
-  ufrmPrincipal in 'ufrmPrincipal.pas' {frmPrincipal};
+  ufrmPrincipal in 'ufrmPrincipal.pas' {frmPrincipal},
+  uThreadComandos in 'uThreadComandos.pas';
 
 {$R *.res}
 
