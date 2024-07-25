@@ -4,26 +4,86 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ShellApi, ExtCtrls, uThreadComandos;
+  Dialogs, StdCtrls, ShellApi, ExtCtrls, uThreadComandos, Buttons,
+  frxpngimage, JvExControls, JvXPCore, JvXPContainer, JvExExtCtrls,
+  JvExtComponent, JvPanel;
 
 type
   TfrmPrincipal = class(TForm)
-    btnListar: TButton;
-    Edit1: TEdit;
-    Label1: TLabel;
-    ListaBranchs: TListBox;
-    btnMudarPara: TButton;
     Timer1: TTimer;
-    btnMesclar: TButton;
-    edBranchBase: TEdit;
-    lbMerge: TLabel;
-    edNovaBranch: TEdit;
-    Label2: TLabel;
-    edPesquisar: TEdit;
-    Label3: TLabel;
-    CheckVerComandos: TCheckBox;
-    Memo1: TMemo;
     TimerAtualizar: TTimer;
+    Panel6: TPanel;
+    Bevel3: TBevel;
+    Bevel4: TBevel;
+    Panel7: TPanel;
+    Panel1: TPanel;
+    Label3: TLabel;
+    Shape1: TShape;
+    Label1: TLabel;
+    lbMerge1: TLabel;
+    Label2: TLabel;
+    Shape2: TShape;
+    Shape3: TShape;
+    Shape4: TShape;
+    edPesquisar: TEdit;
+    Edit1: TEdit;
+    edBranchBase: TEdit;
+    edNovaBranch: TEdit;
+    CheckVerComandos: TCheckBox;
+    Panel8: TPanel;
+    ListaBranchs: TListBox;
+    Memo1: TMemo;
+    pnBotaoAtualizar: TPanel;
+    Shape6: TShape;
+    JvPanel1: TJvPanel;
+    Label8: TLabel;
+    Image5: TImage;
+    Bevel11: TBevel;
+    Bevel2: TBevel;
+    Bevel8: TBevel;
+    Bevel12: TBevel;
+    JvPanel3: TJvPanel;
+    Label10: TLabel;
+    pnBotaoMesclar: TPanel;
+    Shape5: TShape;
+    JvPanel2: TJvPanel;
+    Label4: TLabel;
+    Image1: TImage;
+    Bevel1: TBevel;
+    Bevel9: TBevel;
+    JvPanel4: TJvPanel;
+    Label9: TLabel;
+    pnBotaoMudarPara: TPanel;
+    Shape7: TShape;
+    JvPanel5: TJvPanel;
+    Label5: TLabel;
+    Image2: TImage;
+    Bevel5: TBevel;
+    Bevel6: TBevel;
+    JvPanel6: TJvPanel;
+    Label6: TLabel;
+    pnBotaoEnviar: TPanel;
+    Shape8: TShape;
+    JvPanel7: TJvPanel;
+    Label7: TLabel;
+    Image3: TImage;
+    Bevel7: TBevel;
+    Bevel10: TBevel;
+    JvPanel8: TJvPanel;
+    Label11: TLabel;
+    Image4: TImage;
+    Bevel14: TBevel;
+    lbMerge: TLabel;
+    pnBotaoSair: TPanel;
+    Shape9: TShape;
+    JvPanel9: TJvPanel;
+    Label12: TLabel;
+    Image6: TImage;
+    Bevel13: TBevel;
+    Bevel15: TBevel;
+    JvPanel10: TJvPanel;
+    Label13: TLabel;
+    pnLog: TPanel;
     procedure btnListarClick(Sender: TObject);
     procedure btnMudarParaClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -38,6 +98,20 @@ type
     procedure edPesquisarChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure TimerAtualizarTimer(Sender: TObject);
+    procedure btnEnviarClick(Sender: TObject);
+    procedure LabelBotaoMouseEnter(Sender: TObject);
+    procedure LabelBotaoMouseLeave(Sender: TObject);
+    procedure Label10MouseEnter(Sender: TObject);
+    procedure Label10MouseLeave(Sender: TObject);
+    procedure Label9MouseEnter(Sender: TObject);
+    procedure Label9MouseLeave(Sender: TObject);
+    procedure Label6MouseEnter(Sender: TObject);
+    procedure Label6MouseLeave(Sender: TObject);
+    procedure Label11MouseEnter(Sender: TObject);
+    procedure Label11MouseLeave(Sender: TObject);
+    procedure Label13Click(Sender: TObject);
+    procedure Label13MouseEnter(Sender: TObject);
+    procedure Label13MouseLeave(Sender: TObject);
   private
     ComandosThread:TComandos;
     function DataArquivo(arquivo: string): TDateTime;
@@ -190,7 +264,7 @@ begin
   LimparResult;
   Comando('git checkout ' + Branch);
   Comando('git pull origin ' + Branch);
-  btnListar.Click;
+  btnListarClick(Sender);
 end;
 
 function TfrmPrincipal.Branch():String;
@@ -213,14 +287,14 @@ begin
   begin
     Timer1.Enabled := False;
     Comando('git fetch', true, false);
-    btnListar.Click;
+    btnListarClick(Sender);
   end;
 end;
 
 procedure TfrmPrincipal.ListaBranchsDblClick(Sender: TObject);
 begin
   // ShowMessage(Branch);
-  btnMudarPara.Click;
+  btnMudarParaClick(Sender);
 end;
 
 procedure TfrmPrincipal.ListaBranchsClick(Sender: TObject);
@@ -236,12 +310,13 @@ begin
   Comando('git pull');
   Comando('git checkout ' + Branch);
   Comando('git merge ' + edBranchBase.Text);
-  btnListar.Click;
+  btnListarClick(Sender);
 end;
 
 procedure TfrmPrincipal.Log(sLog:string);
 begin
   Caption := 'Assistente Git - ' + sLog;
+  pnLog.Caption := sLog;
 end;
 
 procedure TfrmPrincipal.edNovaBranchChange(Sender: TObject);
@@ -261,7 +336,7 @@ begin
     Comando('git checkout ' + edBranchBase.Text);
     Comando('git pull');
     Comando('git checkout -b ' + edNovaBranch.Text);
-    btnListar.Click;
+    btnListarClick(Sender);
   end;
 end;
 
@@ -275,7 +350,7 @@ begin
       LimparResult;
       Comando('git checkout ' + edBranchBase.Text);
       Comando('git branch -d ' + Branch);
-      btnListar.Click;
+      btnListarClick(Sender);
     end;
   end;
 end;
@@ -304,6 +379,7 @@ end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
+  lbMerge.Caption := '';
   ComandosThread := TComandos.Create(False);
   AtualizarListas;
 end;
@@ -344,6 +420,113 @@ begin
 
   if FileExists(sPath+'result') then
     Memo1.Lines.LoadFromFile(sPath+'result');
+end;
+
+procedure TfrmPrincipal.btnEnviarClick(Sender: TObject);
+begin
+  Comando('git checkout ' + edBranchBase.Text); // Branch
+  Comando('git pull origin ' + edBranchBase.Text); // Branch
+  Comando('git checkout ' + Branch); // edBranchBase.Text
+  Comando('git pull');
+  Comando('git checkout ' + edBranchBase.Text); // Branch
+  Comando('git merge ' + Branch); // edBranchBase.Text
+  Comando('git push'); // Branch
+  btnListarClick(Sender);
+end;
+
+procedure TfrmPrincipal.LabelBotaoMouseEnter(Sender: TObject);
+begin
+  //TPanel(TLabel(Sender).Parent).Color := $006D9708;
+end;
+
+procedure TfrmPrincipal.LabelBotaoMouseLeave(Sender: TObject);
+begin
+  //TPanel(TLabel(Sender).Parent).Color := $0087BB0A;
+end;
+
+procedure TfrmPrincipal.Label10MouseEnter(Sender: TObject);
+begin
+  Shape6.Brush.Color := $006D9708;
+  Shape6.Repaint;
+  jvpanel1.Repaint;
+  jvpanel3.Repaint;
+end;
+
+procedure TfrmPrincipal.Label10MouseLeave(Sender: TObject);
+begin
+  Shape6.Brush.Color := $0087BB0A;
+  Shape6.Repaint;
+  jvpanel1.Repaint;
+  jvpanel3.Repaint;
+end;
+
+procedure TfrmPrincipal.Label9MouseEnter(Sender: TObject);
+begin
+  Shape5.Brush.Color := $006D9708;
+  Shape5.Repaint;
+  jvpanel2.Repaint;
+  jvpanel4.Repaint;
+end;
+
+procedure TfrmPrincipal.Label9MouseLeave(Sender: TObject);
+begin
+  Shape5.Brush.Color := $0087BB0A;
+  Shape5.Repaint;
+  jvpanel2.Repaint;
+  jvpanel4.Repaint;
+end;
+
+procedure TfrmPrincipal.Label6MouseEnter(Sender: TObject);
+begin
+  Shape7.Brush.Color := $006D9708;
+  Shape7.Repaint;
+  jvpanel5.Repaint;
+  jvpanel6.Repaint;
+end;
+
+procedure TfrmPrincipal.Label6MouseLeave(Sender: TObject);
+begin
+  Shape7.Brush.Color := $0087BB0A;
+  Shape7.Repaint;
+  jvpanel5.Repaint;
+  jvpanel6.Repaint;
+end;
+
+procedure TfrmPrincipal.Label11MouseEnter(Sender: TObject);
+begin
+  Shape8.Brush.Color := $006D9708;
+  Shape8.Repaint;
+  jvpanel7.Repaint;
+  jvpanel8.Repaint;
+end;
+
+procedure TfrmPrincipal.Label11MouseLeave(Sender: TObject);
+begin
+  Shape8.Brush.Color := $0087BB0A;
+  Shape8.Repaint;
+  jvpanel7.Repaint;
+  jvpanel8.Repaint;
+end;
+
+procedure TfrmPrincipal.Label13Click(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfrmPrincipal.Label13MouseEnter(Sender: TObject);
+begin
+  Shape9.Brush.Color := $006D9708;
+  Shape9.Repaint;
+  jvpanel9.Repaint;
+  jvpanel10.Repaint;
+end;
+
+procedure TfrmPrincipal.Label13MouseLeave(Sender: TObject);
+begin
+  Shape9.Brush.Color := $0087BB0A;
+  Shape9.Repaint;
+  jvpanel9.Repaint;
+  jvpanel10.Repaint;
 end;
 
 end.

@@ -1,7 +1,8 @@
-09/07/2024 13:53:28,69 comando: "git checkout   2024-rel-estoque" 
-Switched to branch '2024-rel-estoque'
-09/07/2024 13:53:29,98 comando: "git pull origin   2024-rel-estoque" 
-fatal: couldn't find remote ref 2024-rel-estoque
-09/07/2024 13:53:33,13 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 
-09/07/2024 13:53:43,38 comando: "git fetch" 
-09/07/2024 13:53:46,65 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 
+25/07/2024 14:58:21,45 comando: "git checkout   develop" 
+Your branch is up to date with 'origin/develop'.
+Switched to branch 'develop'
+25/07/2024 14:58:23,02 comando: "git pull origin   develop" 
+From https://dev.azure.com/sstecnologialtda/Horus3/_git/Horus3
+ * branch                develop    -> FETCH_HEAD
+Already up to date.
+25/07/2024 14:58:29,28 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 

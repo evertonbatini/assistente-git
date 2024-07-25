@@ -1,8 +1,18 @@
-  2016-rel-vendas
-* 2024-rel-estoque
-  develop
+  2025-usuario-log
+  2029-rate-limite
+* develop
+  remotes/origin/2025-usuario-log
   remotes/origin/develop
+  2028-nfse-maringa
+  remotes/origin/2029-rate-limite
+  2016-rel-vendas
   remotes/origin/2016-rel-vendas
+  estoque-lista-produto
+  imprimir-producao
+  danfe-nf-cancelada
+  remotes/origin/danfe-nf-cancelada
+  2024-rel-estoque
+  remotes/origin/2024-rel-estoque
   2023-nucleus
   remotes/origin/2023-nucleus
   2020-duplicidade
@@ -10,7 +20,6 @@
   remotes/origin/emprasa-config
   1981-fluxo-previsto
   remotes/origin/1981-fluxo-previsto
-  imprimir-producao
   2020-nf-duplicidade
   remotes/origin/2020-nf-duplicidade
   2019-ref-oc
