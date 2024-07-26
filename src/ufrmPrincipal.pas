@@ -112,6 +112,10 @@ type
     procedure Label13Click(Sender: TObject);
     procedure Label13MouseEnter(Sender: TObject);
     procedure Label13MouseLeave(Sender: TObject);
+    procedure ListaBranchsMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure ListaBranchsDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
   private
     ComandosThread:TComandos;
     function DataArquivo(arquivo: string): TDateTime;
@@ -132,6 +136,8 @@ var
   frmPrincipal: TfrmPrincipal;
 
 implementation
+
+uses Types;
 
 {$R *.dfm}
 
@@ -527,6 +533,74 @@ begin
   Shape9.Repaint;
   jvpanel9.Repaint;
   jvpanel10.Repaint;
+end;
+
+procedure TfrmPrincipal.ListaBranchsMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+begin
+//  pnLog.Caption := 'X: '+Inttostr(x)+' Y: '+Inttostr(y);
+end;
+
+procedure TfrmPrincipal.ListaBranchsDrawItem(Control: TWinControl;
+  Index: Integer; Rect: TRect; State: TOwnerDrawState);
+var
+  Rect2, RectBorda: TRect;
+  top, left:Integer;
+begin
+  {odSelected, odGrayed, odDisabled, odChecked,
+    odFocused, odDefault, odHotLight, odInactive, odNoAccel, odNoFocusRect,
+    odReserved1, odReserved2, odComboBoxEdit}
+
+  top := Rect.Top;
+  left := Rect.Left;
+
+  Rect2.Left := Rect.Left+2;
+  Rect2.Top := Rect.Top+2;
+  Rect2.Right := Rect.Right-2;
+  Rect2.Bottom := Rect.Bottom-2;
+
+  RectBorda.Left := Rect.Left;
+  RectBorda.Top := Rect.Top;
+  RectBorda.Right := Rect.Right;
+  RectBorda.Bottom := Rect.Bottom;
+
+  with ListaBranchs.Canvas do
+  begin
+    Font.Color := $00CCCCCC;
+    Brush.Color := $00181818;
+    // Pen.Color := clBlack;
+
+    if odFocused in State then
+    begin
+      Brush.Color := $00D47800; // azul claro
+      FillRect(RectBorda);
+
+      // Brush.Color := $00D47800; // azul claro
+      Brush.Color := $005E3904; // azul escuro
+      FillRect(Rect2);
+
+      Font.Color := clWhite;
+    end
+    else
+    if odSelected in State then
+    begin
+      Brush.Color := $003D3737;
+    end;
+
+    if not(odFocused in State) then
+    begin
+      FillRect(RectBorda);
+      FillRect(Rect2);
+    end;
+
+    //FillRect(Rect);
+
+    Brush.Style := bsClear;
+    TextOut(left, top+5, ListaBranchs.Items[Index]);
+
+    if odFocused in State then
+      DrawFocusRect(Rect);
+  end;
 end;
 
 end.

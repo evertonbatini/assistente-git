@@ -2851,12 +2851,15 @@ object frmPrincipal: TfrmPrincipal
         Width = 38
         Height = 17
         Caption = 'Buscar'
+        Color = 13924352
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 10120292
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
+        ParentColor = False
         ParentFont = False
+        Transparent = True
       end
       object Shape1: TShape
         Left = 8
@@ -2989,21 +2992,26 @@ object frmPrincipal: TfrmPrincipal
         Left = 20
         Top = 20
         Width = 640
-        Height = 472
+        Height = 450
+        Style = lbOwnerDrawFixed
         Align = alLeft
         BorderStyle = bsNone
-        Color = 2039583
+        Color = 1579032
+        ExtendedSelect = False
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
-        Font.Height = -16
+        Font.Color = 13421772
+        Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
-        ItemHeight = 21
+        IntegralHeight = True
+        ItemHeight = 30
         ParentFont = False
         TabOrder = 0
         OnClick = ListaBranchsClick
         OnDblClick = ListaBranchsDblClick
+        OnDrawItem = ListaBranchsDrawItem
         OnKeyDown = ListaBranchsKeyDown
+        OnMouseMove = ListaBranchsMouseMove
       end
       object Memo1: TMemo
         Left = 668
@@ -3014,7 +3022,7 @@ object frmPrincipal: TfrmPrincipal
         BorderStyle = bsNone
         Color = 2039583
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = 13421772
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
@@ -3045,8 +3053,8 @@ object frmPrincipal: TfrmPrincipal
   object Timer1: TTimer
     Interval = 30
     OnTimer = Timer1Timer
-    Left = 600
-    Top = 64
+    Left = 264
+    Top = 112
   end
   object TimerAtualizar: TTimer
     Enabled = False

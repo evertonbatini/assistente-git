@@ -1,9 +1,10 @@
+  2028-nfse-maringa
+* develop
+  remotes/origin/develop
+  2022-rel-estoque
   2025-usuario-log
   2029-rate-limite
-* develop
   remotes/origin/2025-usuario-log
-  remotes/origin/develop
-  2028-nfse-maringa
   remotes/origin/2029-rate-limite
   2016-rel-vendas
   remotes/origin/2016-rel-vendas

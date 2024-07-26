@@ -1,8 +1,48 @@
-25/07/2024 14:58:21,45 comando: "git checkout   develop" 
+26/07/2024 15:51:18,68 comando: "git checkout   2028-nfse-maringa" 
+Switched to branch '2028-nfse-maringa'
+26/07/2024 15:51:19,90 comando: "git pull origin   2028-nfse-maringa" 
+fatal: couldn't find remote ref 2028-nfse-maringa
+26/07/2024 15:51:23,29 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 
+26/07/2024 16:10:04,03 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 
+26/07/2024 16:12:08,41 comando: "git checkout develop" 
 Your branch is up to date with 'origin/develop'.
 Switched to branch 'develop'
-25/07/2024 14:58:23,02 comando: "git pull origin   develop" 
+26/07/2024 16:12:09,65 comando: "git pull origin develop" 
 From https://dev.azure.com/sstecnologialtda/Horus3/_git/Horus3
  * branch                develop    -> FETCH_HEAD
 Already up to date.
-25/07/2024 14:58:29,28 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 
+26/07/2024 16:12:16,38 comando: "git checkout 2028-nfse-maringa" 
+Switched to branch '2028-nfse-maringa'
+26/07/2024 16:12:17,71 comando: "git pull" 
+From https://dev.azure.com/sstecnologialtda/Horus3/_git/Horus3
+ * [new branch]          Bugs/1545-modal-usuario -> origin/Bugs/1545-modal-usuario
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> 2028-nfse-maringa
+
+26/07/2024 16:12:21,10 comando: "git checkout develop" 
+Your branch is up to date with 'origin/develop'.
+Switched to branch 'develop'
+26/07/2024 16:12:22,58 comando: "git merge 2028-nfse-maringa" 
+Updating bfc0d6c16..8bccd0f46
+Fast-forward
+ Domain/Domain.csproj                           |   6 +
+ Domain/Entities/Abrasf/NFMaringaAbrasfEnvio.cs | 164 +++++++++
+ Domain/Enums/EnumNFe.cs                        |  16 +-
+ Domain/Protos/v2.01                            | 454 +++++++++++++++++++++++++
+ Domain/Services/Api/NFSe/Abrasf.cs             | 235 ++++++++++++-
+ 5 files changed, 872 insertions(+), 3 deletions(-)
+ create mode 100644 Domain/Entities/Abrasf/NFMaringaAbrasfEnvio.cs
+ create mode 100644 Domain/Protos/v2.01
+26/07/2024 16:12:24,29 comando: "git push" 
+To https://dev.azure.com/sstecnologialtda/Horus3/_git/Horus3
+   bfc0d6c16..8bccd0f46  develop -> develop
+26/07/2024 16:12:32,18 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 
+26/07/2024 16:13:26,95 comando: "git fetch" 
+26/07/2024 16:13:31,11 comando: "git branch -a --sort=-committerdate>C:\Users\Everton\source\repos\assistente-git\bin\branch" 
