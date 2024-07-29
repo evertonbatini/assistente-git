@@ -85,6 +85,7 @@ type
     Label13: TLabel;
     pnLog: TPanel;
     TimerRepaint: TTimer;
+    Image7: TImage;
     procedure btnListarClick(Sender: TObject);
     procedure btnMudarParaClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -118,6 +119,7 @@ type
     procedure ListaBranchsDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
     procedure TimerRepaintTimer(Sender: TObject);
+    procedure Image7Click(Sender: TObject);
   private
     ComandosThread:TComandos;
     RectAnterior: TRect;
@@ -657,6 +659,14 @@ procedure TfrmPrincipal.TimerRepaintTimer(Sender: TObject);
 begin
   TimerRepaint.Enabled := False;
   ListaBranchs.Repaint;
+end;
+
+procedure TfrmPrincipal.Image7Click(Sender: TObject);
+begin
+  if (Panel6.Width = 144) then
+    Panel6.Width := 49
+  else
+    Panel6.Width := 144;
 end;
 
 end.
