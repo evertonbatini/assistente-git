@@ -84,6 +84,7 @@ type
     JvPanel10: TJvPanel;
     Label13: TLabel;
     pnLog: TPanel;
+    TimerRepaint: TTimer;
     procedure btnListarClick(Sender: TObject);
     procedure btnMudarParaClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -116,8 +117,11 @@ type
       Y: Integer);
     procedure ListaBranchsDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
+    procedure TimerRepaintTimer(Sender: TObject);
   private
     ComandosThread:TComandos;
+    RectAnterior: TRect;
+    indiceAnterior: Integer;
     function DataArquivo(arquivo: string): TDateTime;
     function RunProcess(FileName: string; ShowCmd: DWORD; wait: Boolean;
       ProcID: PDWORD): Longword;
@@ -388,6 +392,12 @@ begin
   lbMerge.Caption := '';
   ComandosThread := TComandos.Create(False);
   AtualizarListas;
+
+  RectAnterior.Left := 0;
+  RectAnterior.Top := 0;
+  RectAnterior.Right := 0;
+  RectAnterior.Bottom := 0;
+  indiceAnterior := -1;
 end;
 
 procedure TfrmPrincipal.TimerAtualizarTimer(Sender: TObject);
@@ -537,8 +547,43 @@ end;
 
 procedure TfrmPrincipal.ListaBranchsMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
+var
+  Rect: TRect;
+  item:Integer;
 begin
-//  pnLog.Caption := 'X: '+Inttostr(x)+' Y: '+Inttostr(y);
+  item := Y div 30;
+  // pnLog.Caption := 'X: '+Inttostr(x)+' Y: '+Inttostr(y);
+
+  {TimerRepaint.Enabled := False;
+  TimerRepaint.Enabled := True;}
+
+  //pnLog.Caption := 'item: '+Inttostr(item);
+
+  Rect.Left := 0;
+  Rect.Top := item*30;
+  Rect.Right := 623;
+  Rect.Bottom := Rect.Top+30;
+
+  with ListaBranchs.Canvas do
+  begin
+    if (indiceAnterior>=0) and (indiceAnterior <> ListaBranchs.ItemIndex) then
+    begin
+      Brush.Color := $00181818;
+      Font.Color := $00CCCCCC;
+      ListaBranchs.Canvas.FillRect(RectAnterior);
+      TextOut(RectAnterior.left, RectAnterior.top+5, ListaBranchs.Items[indiceAnterior]);
+    end;
+
+    if (item <> ListaBranchs.ItemIndex) then
+    begin
+      Brush.Color := $002E2D2A;
+      ListaBranchs.Canvas.FillRect(Rect);
+      TextOut(Rect.left, Rect.top+5, ListaBranchs.Items[item]);
+    end;
+
+    RectAnterior := Rect;
+    indiceAnterior := item;
+  end;
 end;
 
 procedure TfrmPrincipal.ListaBranchsDrawItem(Control: TWinControl;
@@ -550,6 +595,11 @@ begin
   {odSelected, odGrayed, odDisabled, odChecked,
     odFocused, odDefault, odHotLight, odInactive, odNoAccel, odNoFocusRect,
     odReserved1, odReserved2, odComboBoxEdit}
+
+  {Memo1.Lines.Add(IntToStr(Rect.Left));
+  Memo1.Lines.Add(IntToStr(Rect.Top));
+  Memo1.Lines.Add(IntToStr(Rect.Right));
+  Memo1.Lines.Add(IntToStr(Rect.Bottom));}
 
   top := Rect.Top;
   left := Rect.Left;
@@ -601,6 +651,12 @@ begin
     if odFocused in State then
       DrawFocusRect(Rect);
   end;
+end;
+
+procedure TfrmPrincipal.TimerRepaintTimer(Sender: TObject);
+begin
+  TimerRepaint.Enabled := False;
+  ListaBranchs.Repaint;
 end;
 
 end.

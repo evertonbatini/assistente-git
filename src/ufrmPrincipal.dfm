@@ -2851,7 +2851,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 38
         Height = 17
         Caption = 'Buscar'
-        Color = 13924352
+        Color = 3026218
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 10120292
         Font.Height = -13
@@ -2993,6 +2993,7 @@ object frmPrincipal: TfrmPrincipal
         Top = 20
         Width = 640
         Height = 450
+        Cursor = crHandPoint
         Style = lbOwnerDrawFixed
         Align = alLeft
         BorderStyle = bsNone
@@ -3062,5 +3063,12 @@ object frmPrincipal: TfrmPrincipal
     OnTimer = TimerAtualizarTimer
     Left = 224
     Top = 112
+  end
+  object TimerRepaint: TTimer
+    Enabled = False
+    Interval = 30
+    OnTimer = TimerRepaintTimer
+    Left = 360
+    Top = 196
   end
 end
