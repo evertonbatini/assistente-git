@@ -1,15 +1,46 @@
-* 2028-nfse-maringa
+  2045-nf-importacao
+* 2046-romaneio
   develop
   remotes/origin/develop
+  imprimir-producao
+  2042-importacao
+  remotes/origin/2042-importacao
+  2044-validacao
+  2043-situacao
+  electron
+  remotes/origin/electron
+  2040-boleto
+  remotes/origin/2040-boleto
+  2039-nfce
+  2001-classificacao
+  2030-filtros-boleto
+  2022-relatorio
+  2036-nf-duplicar
+  2032-api-inter
+  2035-rel-cores
+  manifestacao
+  nfe-duplicidade
+  tabela-icms
+  bloqueio-nf-referenciar
+  remotes/origin/2032-api-inter
+  2016-rel-vendas
+  log-usuario-und
+  remotes/origin/log-usuario-und
+  nucleus-round
+  logo-danfe
+  remotes/origin/logo-danfe
+  2033-nfse
+  2031-controle-cheque
   2022-rel-estoque
+  remotes/origin/2022-rel-estoque
+  validacao-fatura
+  2028-nfse-maringa
   2025-usuario-log
   2029-rate-limite
   remotes/origin/2025-usuario-log
   remotes/origin/2029-rate-limite
-  2016-rel-vendas
   remotes/origin/2016-rel-vendas
   estoque-lista-produto
-  imprimir-producao
   danfe-nf-cancelada
   remotes/origin/danfe-nf-cancelada
   2024-rel-estoque
