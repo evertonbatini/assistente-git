@@ -3066,6 +3066,7 @@ object frmPrincipal: TfrmPrincipal
         BorderStyle = bsNone
         TabOrder = 2
         Text = 'develop'
+        OnChange = edBranchBaseChange
       end
       object edNovaBranch: TEdit
         Left = 198
@@ -3188,5 +3189,11 @@ object frmPrincipal: TfrmPrincipal
     OnTimer = TimerRepaintTimer
     Left = 360
     Top = 196
+  end
+  object Timer2: TTimer
+    Interval = 60
+    OnTimer = Timer2Timer
+    Left = 424
+    Top = 276
   end
 end

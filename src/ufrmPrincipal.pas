@@ -86,6 +86,7 @@ type
     pnLog: TPanel;
     TimerRepaint: TTimer;
     Image7: TImage;
+    Timer2: TTimer;
     procedure btnListarClick(Sender: TObject);
     procedure btnMudarParaClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -120,7 +121,10 @@ type
       Rect: TRect; State: TOwnerDrawState);
     procedure TimerRepaintTimer(Sender: TObject);
     procedure Image7Click(Sender: TObject);
+    procedure edBranchBaseChange(Sender: TObject);
+    procedure Timer2Timer(Sender: TObject);
   private
+    sPath:string;
     ComandosThread:TComandos;
     RectAnterior: TRect;
     indiceAnterior: Integer;
@@ -148,11 +152,7 @@ uses Types;
 {$R *.dfm}
 
 procedure TfrmPrincipal.btnListarClick(Sender: TObject);
-var
-  sPath:String;
 begin
-  sPath := ExtractFilePath(Application.ExeName);
-
   Comando('git branch -a --sort=-committerdate>'+sPath+'branch', true, false);
 
   TimerAtualizar.Enabled := True;
@@ -195,8 +195,6 @@ begin
 
   Application.ProcessMessages;
 
-  sPath := ExtractFilePath(Application.ExeName);
-
   if (CheckVerComandos.Checked) then
   begin
     comando := 'pause & '+comando+' & pause';
@@ -224,7 +222,7 @@ var
 begin
   commandExec := TCommandoExec.Create;
   commandExec.comando := comando;
-  commandExec.sPath := ExtractFilePath(Application.ExeName);
+  commandExec.sPath := sPath;
   commandExec.repo := Edit1.Text;
   commandExec.salvarResult := salvarResult;
   ComandosThread.addComando(commandExec);
@@ -382,15 +380,22 @@ begin
 end;
 
 procedure TfrmPrincipal.LimparResult;
-var
-  sPath:string;
 begin
-  sPath := ExtractFilePath(Application.ExeName);
   DeleteFile(sPath+'result');
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
+var
+  sArquivo:TStringList;
 begin
+  if (FileExists(sPath+'branch-base')) then
+  begin
+    sArquivo := TStringList.Create;
+    sArquivo.LoadFromFile(sPath+'branch-base');
+    edBranchBase.Text := Trim(sArquivo.Strings[0]);
+  end;
+
+  Edit1.Text := ExtractFilePath(Application.ExeName);
   lbMerge.Caption := '';
   ComandosThread := TComandos.Create(False);
   AtualizarListas;
@@ -415,13 +420,10 @@ end;
 
 procedure TfrmPrincipal.AtualizarListas;
 var
-  sArquivo:TStringList;  
+  sArquivo:TStringList;
   dtArquivo: TDateTime;
-  sPath : String;
   i:Integer;
 begin
-  sPath := ExtractFilePath(Application.ExeName);
-
   dtArquivo := DataArquivo(sPath+'branch');
   Log('Atualizado: ' + DateTimeToStr(dtArquivo));
 
@@ -573,14 +575,16 @@ begin
       Brush.Color := $00181818;
       Font.Color := $00CCCCCC;
       ListaBranchs.Canvas.FillRect(RectAnterior);
-      TextOut(RectAnterior.left, RectAnterior.top+5, ListaBranchs.Items[indiceAnterior]);
+      if (indiceAnterior < ListaBranchs.Items.Count) then
+        TextOut(RectAnterior.left, RectAnterior.top+5, ListaBranchs.Items[indiceAnterior]);
     end;
 
     if (item <> ListaBranchs.ItemIndex) then
     begin
       Brush.Color := $002E2D2A;
       ListaBranchs.Canvas.FillRect(Rect);
-      TextOut(Rect.left, Rect.top+5, ListaBranchs.Items[item]);
+      if (item < ListaBranchs.Items.Count) then
+        TextOut(Rect.left, Rect.top+5, ListaBranchs.Items[item]);
     end;
 
     RectAnterior := Rect;
@@ -667,6 +671,35 @@ begin
     Panel6.Width := 49
   else
     Panel6.Width := 144;
+end;
+
+procedure TfrmPrincipal.edBranchBaseChange(Sender: TObject);
+var
+  sArquivo:TStringList;
+begin
+  sArquivo := TStringList.Create;
+  sArquivo.Text := edBranchBase.Text;
+  sArquivo.SaveToFile(sPath+'branch-base');
+end;
+
+procedure TfrmPrincipal.Timer2Timer(Sender: TObject);
+var
+  sArquivo:TStringList;
+  result:string;
+begin
+  if FileExists(sPath+'result') then
+  begin
+    try
+      sArquivo := TStringList.Create;
+      sArquivo.LoadFromFile(sPath+'result');
+
+      if (sArquivo.Text <> Memo1.Lines.Text) then
+        Memo1.Lines.LoadFromFile(sPath+'result');
+
+      FreeAndNil(sArquivo);
+    except
+    end;
+  end;
 end;
 
 end.
